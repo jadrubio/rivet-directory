@@ -1,44 +1,47 @@
-import { Box, Stack } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Profile } from "./profileUtils";
+import { ProfileDetails } from "./ProfileDetails";
+import { ProfileSummary } from "./ProfileSummary";
 
 type ProfileLineItemArgs = {
   profile: Profile;
-}
+};
 
-const ProfileLineItem = ({
-  profile
-}: ProfileLineItemArgs) => {
-
+const ProfileLineItem = ({ profile }: ProfileLineItemArgs) => {
   const hasPhoto = !!profile.photo;
-  const spectrum = 'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%)';
 
   return (
-    <Stack direction={'row'} spacing={1}>
-      { hasPhoto && (
-        <Box sx={{
-          width: '5em', 
-          height: '5em', 
-          backgroundImage: `url("${profile.photo}")`,
-          backgroundSize: 'cover',
-        }} />
-      )}
-      { !hasPhoto && (
-        <Box sx={{
-          width: '5em', 
-          height: '5em', 
-          background: spectrum,
-          }}>
-          
-        </Box>
-      )}
-      <Stack spacing={1} style={{padding: '.5em' }}>
-        <Box>
-          <h3 style={{margin: 0}}>{profile.first_name} {profile.last_name}</h3>
-        </Box>
-        <Box>{profile.email} - {profile.phone} </Box>
-      </Stack>
-    </Stack>
-  )
-}
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel2-content"
+        id="panel2-header"
+      >
+        <ProfileSummary
+          photo={profile.photo}
+          firstName={profile.first_name}
+          lastName={profile.last_name}
+          email={profile.email}
+          phone={profile.phone}
+        />
+      </AccordionSummary>
+      <AccordionDetails>
+        <ProfileDetails
+          id={profile.id}
+          address={profile.address}
+          city={profile.city}
+          state={profile.state}
+          zip={profile.zip}
+          notes={profile.notes}
+        />
+      </AccordionDetails>
+    </Accordion>
+  );
+};
 
-export { ProfileLineItem }
+export { ProfileLineItem };

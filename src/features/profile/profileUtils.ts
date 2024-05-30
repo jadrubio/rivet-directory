@@ -17,6 +17,7 @@ type Profile = {
 type ProfileState = {
   profiles: Profile[];
   inFocus: Profile | null;
+  loading: boolean;
 }
 
 const makeFakeUserList = ():Profile[] => {

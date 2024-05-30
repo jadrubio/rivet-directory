@@ -14,8 +14,23 @@ function returnFakeProfiles() {
   return profiles;
 }
 
+async function returnNetworkProfileById(id: string) {
+   const profile = await fetch("https://codechallenge.rivet.work/api/v1/profile/1", {
+      headers: {
+        "token": process.env.REACT_APP_API_TOKEN || ''
+      }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      // do something with the data
+      return data;
+    })
+
+  return profile
+}
+
 async function returnNetworkProfiles() {
-  const profiles = await fetch("https://codechallenge.rivet.work/api/v1/profile/1", {
+  const profiles = await fetch("https://codechallenge.rivet.work/api/v1/profiles", {
     headers: {
       "token": process.env.REACT_APP_API_TOKEN || ''
     }
@@ -26,7 +41,6 @@ async function returnNetworkProfiles() {
     return data;
   })
 
-  console.log('got some data', profiles);
   if (isArray(profiles)) {
     return profiles;
   }

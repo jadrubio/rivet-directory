@@ -1,8 +1,4 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-} from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Profile } from "./profileUtils";
 import { ProfileDetails } from "./ProfileDetails";
@@ -13,8 +9,6 @@ type ProfileLineItemArgs = {
 };
 
 const ProfileLineItem = ({ profile }: ProfileLineItemArgs) => {
-  const hasPhoto = !!profile.photo;
-
   return (
     <Accordion>
       <AccordionSummary

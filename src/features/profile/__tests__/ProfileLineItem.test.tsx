@@ -4,7 +4,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { ProfileLineItem } from "../ProfileLineItem";
 import { Profile } from "../profileUtils";
-import profileReducer from "../profileSlice";
+import profileReducer from "../../../store/profileSlice";
+import { BrowserRouter } from "react-router-dom";
 
 const mockProfile: Profile = {
   id: 1,
@@ -27,7 +28,11 @@ const renderWithProvider = (component: React.ReactNode) => {
     },
   });
 
-  return render(<Provider store={store}>{component}</Provider>);
+  return render(
+    <Provider store={store}>
+      <BrowserRouter>{component}</BrowserRouter> {/* Wrap with BrowserRouter */}
+    </Provider>
+  );
 };
 
 describe("ProfileLineItem component", () => {

@@ -4,8 +4,9 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import { ProfileDetails } from "../ProfileDetails";
-import { setActiveProfile } from "../profileSlice";
-import { Store, AnyAction, Dispatch} from "@reduxjs/toolkit";
+import { setActiveProfile } from "../../../store/profileSlice";
+import { Store, AnyAction, Dispatch } from "@reduxjs/toolkit";
+import { BrowserRouter } from "react-router-dom";
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -21,7 +22,11 @@ describe("ProfileDetails component", () => {
   });
 
   const renderWithProviders = (ui: any) => {
-    return render(<Provider store={store}>{ui}</Provider>);
+    return render(
+      <Provider store={store}>
+        <BrowserRouter>{ui}</BrowserRouter> {/* Wrap with BrowserRouter */}
+      </Provider>,
+    );
   };
 
   it("renders", () => {
@@ -79,7 +84,7 @@ describe("ProfileDetails component", () => {
     expect(screen.queryByText("Some important notes")).not.toBeInTheDocument();
   });
 
-  it("clicking the edit button triggers trySetProfile", () => {
+  it("clicking the edit button triggers setActiveProfile", () => {
     renderWithProviders(
       <ProfileDetails
         id={1}

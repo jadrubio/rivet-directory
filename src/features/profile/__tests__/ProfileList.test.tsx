@@ -5,9 +5,9 @@ import "@testing-library/jest-dom/extend-expect";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { ProfileList } from "../ProfileList";
-import { profileList } from "../profileSlice";
+import { profileList } from "../../../store/profileSlice";
 import { Profile } from "../profileUtils";
-import profileReducer from "../profileSlice"; // Adjust this import to the actual path
+import profileReducer from "../../../store/profileSlice"; // Adjust this import to the actual path
 import * as reduxHooks from "react-redux";
 
 jest.mock("../ProfileLineItem", () => ({

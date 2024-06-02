@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { countProfiles, currentProfile } from "./profileSlice";
+import { countProfiles, currentProfile } from "../../store/profileSlice";
 import { useSelector } from "react-redux";
 
 const Status = () => {

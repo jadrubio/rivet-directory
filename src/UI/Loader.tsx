@@ -6,7 +6,12 @@ type LoaderArgs = {
 }
 const Loader = ({ loading, size = 20 }: LoaderArgs) => {
   return (
-    <Box sx={{ marginTop:20 }}>
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+    }}>
       <Fade
         in={loading}
         style={{

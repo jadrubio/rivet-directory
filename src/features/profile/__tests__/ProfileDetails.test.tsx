@@ -20,7 +20,7 @@ describe("ProfileDetails component", () => {
     store.dispatch = mockDispatch;
   });
 
-  const renderWithProviders = (ui: any, { reduxState }: any = {}) => {
+  const renderWithProviders = (ui: any) => {
     return render(<Provider store={store}>{ui}</Provider>);
   };
 

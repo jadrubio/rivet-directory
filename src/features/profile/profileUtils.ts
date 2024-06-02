@@ -1,4 +1,5 @@
 import fakeUsers from './fakeUsers.json';
+import * as yup from "yup";
 
 type Profile = {
     "id": number,
@@ -10,8 +11,21 @@ type Profile = {
     "city": string, // 255 char max / required",
     "state": string, // 255 char max / required",
     "zip": string, // 255 char max / required",
-    "photo": string, // 255 char max / URL to image file",
-    "notes": string, // 4GB max"
+    "photo"?: string, // 255 char max / URL to image file",
+    "notes"?: string, // 4GB max"
+}
+
+const blankFormState = {
+  first_name: '',
+  last_name: '',
+  phone: '',
+  email: '',
+  address: '',
+  city: '',
+  state: '',
+  zip: '',
+  photo: '',
+  notes: '',
 }
 
 type ProfileState = {
@@ -42,8 +56,30 @@ const makeFakeUserList = ():Profile[] => {
   })
 }
 
+const validationSchema = yup.object().shape({
+  first_name: yup.string().max(255).required("First name is required"),
+  last_name: yup.string().max(255).required("Last name is required"),
+  phone: yup.string().max(255).required("Phone is required"),
+  email: yup
+    .string()
+    .max(255)
+    .email("Invalid email format")
+    .required("Email is required"),
+  address: yup.string().max(255).required("Address is required"),
+  city: yup.string().max(255).required("City is required"),
+  state: yup.string().max(255).required("State is required"),
+  zip: yup.string().max(255).required("ZIP is required"),
+  photo: yup.string().max(255).url("Invalid URL format").optional(),
+  notes: yup
+    .string()
+    .max(4 * 1024 * 1024 * 1024)
+    .optional(), // 4GB max
+});
+
 export {
+  validationSchema,
   makeFakeUserList,
+  blankFormState,
   type Profile,
   type ProfileState,
 }

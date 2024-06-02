@@ -3,6 +3,7 @@ import { ProfileState, makeFakeUserList, Profile } from "../features/profile/pro
 import { RootState } from "../store";
 import { isArray } from "lodash";
 
+const BASE_URL = "https://codechallenge.rivet.work/api/v1";
 const initialState = {
   profiles: [],
   inFocus: null,
@@ -16,7 +17,7 @@ function returnFakeProfiles() {
 }
 
 async function returnNetworkProfileById(id: string) {
-  return await fetch("https://codechallenge.rivet.work/api/v1/profile/1", {
+  return await fetch(`${BASE_URL}/profile/1`, {
     headers: {
       token: process.env.REACT_APP_API_TOKEN || "",
     },
@@ -29,7 +30,7 @@ async function returnNetworkProfileById(id: string) {
 
 async function returnNetworkProfiles() {
   const profiles = await fetch(
-    "https://codechallenge.rivet.work/api/v1/profiles",
+    `${BASE_URL}/profiles`,
     {
       headers: {
         token: process.env.REACT_APP_API_TOKEN || "",
@@ -49,7 +50,7 @@ async function returnNetworkProfiles() {
 
 async function createNetworkProfile(data: Omit<Profile, "id">) {
   const response = await fetch(
-    `https://codechallenge.rivet.work/api/v1/profile`,
+    `${BASE_URL}/profile`,
     {
       method: "POST",
       headers: {
@@ -64,7 +65,7 @@ async function createNetworkProfile(data: Omit<Profile, "id">) {
 
 async function updateNetworkProfile(id: number, data: Profile) {
   const response = await fetch(
-    `https://codechallenge.rivet.work/api/v1/profile/${id}`,
+    `${BASE_URL}/profile/${id}`,
     {
       method: "PUT",
       headers: {

@@ -1,14 +1,13 @@
-import store from "../../store";
+import {useEffect} from "react";
 import { useSelector } from "react-redux";
-import {Controller, useForm} from "react-hook-form";
+import { useForm} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {Box, Button, Typography, Grid, TextareaAutosize} from "@mui/material";
+import {Box, Button, Typography, Grid} from "@mui/material";
 import {blankFormState, Profile, transformObjValNullToEmptyString, validationSchema} from "./profileUtils";
-import { RootState } from "../../store";
+import store, { RootState } from "../../store";
 import { createProfile, setActiveProfile, updateProfile } from "../../store/profileSlice";
 import { FormInput } from "../../UI/FormInput";
-import {useEffect} from "react";
 
 type ProfileFormArgs = Omit<Profile, "id">;
 

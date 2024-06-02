@@ -2,8 +2,8 @@ import { Box, Stack } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
 
-type ProfileSummaryArgs = {
-  photo: string;
+export type ProfileSummaryArgs = {
+  photo?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -47,8 +47,10 @@ const ProfileSummary = ({
           </h3>
         </Box>
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          <MailOutlineIcon sx={{ margin: "0 5px" }} /> {email} -{" "}
-          <PhoneIcon sx={{ margin: "0 5px" }} /> {phone}
+          {/*<MailOutlineIcon sx={{ margin: "0 5px" }} />*/}
+          {email} -{" "}
+          {/*<PhoneIcon sx={{ margin: "0 5px" }} /> */}
+          {phone}
         </Box>
       </Stack>
     </Stack>

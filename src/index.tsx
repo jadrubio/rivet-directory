@@ -12,6 +12,7 @@ import { fetchProfiles } from './store/profileSlice';
 import HomePage from "./pages/HomePage";
 import {ErrorPage} from "./pages/ErrorPage";
 import FormPage from "./pages/FormPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     path: "/profile-form",
     element: <FormPage />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "/profile/:id",
+    element: <ProfilePage />,
   },
   {
     path: "*",

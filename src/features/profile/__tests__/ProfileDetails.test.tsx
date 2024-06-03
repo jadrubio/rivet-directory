@@ -29,7 +29,7 @@ describe("ProfileDetails component", () => {
     );
   };
 
-  it("renders", () => {
+  it("renders EditProfileLink component", () => {
     renderWithProviders(
       <ProfileDetails
         id={1}
@@ -39,8 +39,7 @@ describe("ProfileDetails component", () => {
         zip="12345"
       />,
     );
-    const profileDetailElement = screen.getByText("123 Main St");
-    expect(profileDetailElement).toBeInTheDocument();
+    expect(screen.getByText("Edit Profile")).toBeInTheDocument();
   });
 
   it("displays the address correctly", () => {
@@ -84,18 +83,18 @@ describe("ProfileDetails component", () => {
     expect(screen.queryByText("Some important notes")).not.toBeInTheDocument();
   });
 
-  it("clicking the edit button triggers setActiveProfile", () => {
+  it("navigates to the correct URL from clicking 'View Profile' button ", () => {
     renderWithProviders(
       <ProfileDetails
         id={1}
-        address="1 Anderson Ave"
-        city="Anytown"
+        address="123 Main St"
+        city="Test City"
         state="CA"
-        zip="11111"
+        zip="12345"
       />,
     );
-    const editButton = screen.getByRole("button");
-    fireEvent.click(editButton);
+    const viewProfileButton = screen.getByText("View Profile");
+    fireEvent.click(viewProfileButton);
     expect(mockDispatch).toHaveBeenCalledWith(setActiveProfile(1));
   });
 });

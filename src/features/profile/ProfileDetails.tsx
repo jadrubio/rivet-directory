@@ -3,15 +3,15 @@ import {
   AccordionActions,
   Box,
   Container,
-  IconButton, Tooltip,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { setActiveProfile } from "../../store/profileSlice";
 import HomeIcon from "@mui/icons-material/Home";
 import Divider from "@mui/material/Divider";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import EditNoteSharpIcon from "@mui/icons-material/EditNoteSharp";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { EditProfileLink } from "../../UI/EditProfileLink";
 
 export type ProfileDetailArgs = {
   id: number;
@@ -67,29 +67,21 @@ const ProfileDetails = ({
           <Typography
             variant="body1"
             sx={{
-              overflow: 'hidden',
-              display: '-webkit-box',
-              WebkitBoxOrient: 'vertical',
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
               WebkitLineClamp: maxNoteLines,
             }}
           >
             {notes}
           </Typography>
-          {notes.split('\n').length > maxNoteLines && (
-            <Link
-              to={`/profile/${id}`}
-            >
-              View Profile
-            </Link>
+          {notes.split("\n").length > maxNoteLines && (
+            <Link to={`/profile/${id}`}>View Profile</Link>
           )}
         </Box>
       )}
       <AccordionActions>
-        <Tooltip title="Edit Profile">
-          <IconButton onClick={() => editProfile(id)} >
-            <EditNoteSharpIcon />
-          </IconButton>
-        </Tooltip>
+        <EditProfileLink id={id} />
       </AccordionActions>
     </Container>
   );

@@ -3,16 +3,16 @@ import * as yup from "yup";
 
 type Profile = {
     "id": number,
-    "first_name": string, // 255 char max / required",
-    "last_name": string, // 255 char max / required",
-    "phone": string, // 255 char max / required",
-    "email": string, // 255 char max / required",
-    "address": string, // 255 char max / required",
-    "city": string, // 255 char max / required",
-    "state": string, // 255 char max / required",
-    "zip": string, // 255 char max / required",
-    "photo"?: string, // 255 char max / URL to image file",
-    "notes"?: string, // 4GB max"
+    "first_name": string, // 255 char max / required,
+    "last_name": string, // 255 char max / required,
+    "phone": string, // 255 char max / required,
+    "email": string, // 255 char max / required,
+    "address": string, // 255 char max / required,
+    "city": string, // 255 char max / required,
+    "state": string, // 255 char max / required,
+    "zip": string, // 255 char max / required,
+    "photo"?: string, // 255 char max / URL to image file,
+    "notes"?: string, // 4GB max
 }
 
 const blankFormState = {
@@ -69,17 +69,28 @@ const validationSchema = yup.object().shape({
   city: yup.string().max(255).required("City is required"),
   state: yup.string().max(255).required("State is required"),
   zip: yup.string().max(255).required("ZIP is required"),
-  photo: yup.string().max(255).url("Invalid URL format").optional(),
+  photo: yup.string().url('Invalid URL format').optional(),
   notes: yup
     .string()
     .max(4 * 1024 * 1024 * 1024)
     .optional(), // 4GB max
 });
 
+const transformObjValNullToEmptyString = (obj: any): any => {
+  const transformedObj  = { ...obj };
+  for (const key in transformedObj) {
+    if (transformedObj[key] === null) {
+      transformedObj[key] = "";
+    }
+  }
+  return transformedObj;
+};
+
 export {
   validationSchema,
   makeFakeUserList,
   blankFormState,
+  transformObjValNullToEmptyString,
   type Profile,
   type ProfileState,
 }

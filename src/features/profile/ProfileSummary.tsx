@@ -1,6 +1,7 @@
 import { Box, Stack } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
+import {ProfilePic} from "../../UI/ProfilePic";
 
 export type ProfileSummaryArgs = {
   photo?: string;
@@ -9,9 +10,6 @@ export type ProfileSummaryArgs = {
   email: string;
   phone: string;
 };
-
-const spectrum =
-  "linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%)";
 
 const ProfileSummary = ({
   photo,
@@ -22,24 +20,7 @@ const ProfileSummary = ({
 }: ProfileSummaryArgs) => {
   return (
     <Stack direction={"row"} spacing={1}>
-      {photo ? (
-        <Box
-          sx={{
-            width: "5em",
-            height: "5em",
-            backgroundImage: `url("${photo}")`,
-            backgroundSize: "cover",
-          }}
-        />
-      ) : (
-        <Box
-          sx={{
-            width: "5em",
-            height: "5em",
-            background: spectrum,
-          }}
-        />
-      )}
+     <ProfilePic photo={photo} />
       <Stack spacing={1} style={{ padding: ".5em" }}>
         <Box>
           <h3 style={{ margin: 0 }}>
@@ -47,9 +28,9 @@ const ProfileSummary = ({
           </h3>
         </Box>
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          {/*<MailOutlineIcon sx={{ margin: "0 5px" }} />*/}
+          <MailOutlineIcon sx={{ margin: "0 5px" }} />
           {email} -{" "}
-          {/*<PhoneIcon sx={{ margin: "0 5px" }} /> */}
+          <PhoneIcon sx={{ margin: "0 5px" }} />
           {phone}
         </Box>
       </Stack>

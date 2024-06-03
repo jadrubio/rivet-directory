@@ -1,11 +1,19 @@
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import store from "../store";
+import { setActiveProfile } from "../store/profileSlice";
 
 const TopBar = () => {
+  const navigate = useNavigate();
+
   function handleClickAdd() {
-    console.log("Should add another profile!");
+    store.dispatch(setActiveProfile(null));
+    navigate("/profile-form");
   }
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <Box
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
       <Box
         sx={{
           boxSizing: "border-box",
@@ -37,7 +45,7 @@ const TopBar = () => {
       </Box>
       <h1>Welcome to Rivet</h1>
     </Box>
-  )
-}
+  );
+};
 
-export { TopBar }
+export { TopBar };

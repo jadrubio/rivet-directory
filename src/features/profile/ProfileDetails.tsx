@@ -1,16 +1,15 @@
-import { useDispatch } from "react-redux";
 import {
   AccordionActions,
   Box,
+  Button,
   Container,
   Tooltip,
   Typography,
 } from "@mui/material";
-import { setActiveProfile } from "../../store/profileSlice";
 import HomeIcon from "@mui/icons-material/Home";
 import Divider from "@mui/material/Divider";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { EditProfileLink } from "../../UI/EditProfileLink";
 
 export type ProfileDetailArgs = {
@@ -32,17 +31,7 @@ const ProfileDetails = ({
   zip,
   notes,
 }: ProfileDetailArgs) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  function editProfile(data: number) {
-    dispatch(setActiveProfile(data));
-    navigate("/profile-form");
-  }
-
-  function viewProfile(id: number) {
-    navigate(`/view-profile`);
-  }
 
   return (
     <Container>
@@ -69,18 +58,19 @@ const ProfileDetails = ({
             sx={{
               overflow: "hidden",
               display: "-webkit-box",
+              whiteSpace: "pre-wrap",
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: maxNoteLines,
             }}
           >
             {notes}
           </Typography>
-          {notes.split("\n").length > maxNoteLines && (
-            <Link to={`/profile/${id}`}>View Profile</Link>
-          )}
         </Box>
       )}
       <AccordionActions>
+        <Button variant="text" onClick={() => navigate(`profile/${id}`)}>
+          View Profile
+        </Button>
         <EditProfileLink id={id} />
       </AccordionActions>
     </Container>

@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ProfileState, makeFakeUserList, Profile } from "../features/profile/profileUtils";
+import {
+  ProfileState,
+  makeFakeUserList,
+  Profile,
+} from "../features/profile/profileUtils";
 import { RootState } from "../store";
 import { isArray } from "lodash";
 
@@ -29,14 +33,11 @@ async function returnNetworkProfileById(id: string) {
 }
 
 async function returnNetworkProfiles() {
-  const profiles = await fetch(
-    `${BASE_URL}/profiles`,
-    {
-      headers: {
-        token: process.env.REACT_APP_API_TOKEN || "",
-      },
+  const profiles = await fetch(`${BASE_URL}/profiles`, {
+    headers: {
+      token: process.env.REACT_APP_API_TOKEN || "",
     },
-  )
+  })
     .then((response) => response.json())
     .then((data) => {
       return data;
@@ -49,32 +50,26 @@ async function returnNetworkProfiles() {
 }
 
 async function createNetworkProfile(data: Omit<Profile, "id">) {
-  const response = await fetch(
-    `${BASE_URL}/profile`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: process.env.REACT_APP_API_TOKEN || "",
-      },
-      body: JSON.stringify(data),
+  const response = await fetch(`${BASE_URL}/profile`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      token: process.env.REACT_APP_API_TOKEN || "",
     },
-  );
+    body: JSON.stringify(data),
+  });
   return response.json();
 }
 
-async function updateNetworkProfile(id: number, data: Profile) {
-  const response = await fetch(
-    `${BASE_URL}/profile/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        token: process.env.REACT_APP_API_TOKEN || "",
-      },
-      body: JSON.stringify(data),
+async function updateNetworkProfile(data: Profile) {
+  const response = await fetch(`${BASE_URL}/profile/${data.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      token: process.env.REACT_APP_API_TOKEN || "",
     },
-  );
+    body: JSON.stringify(data),
+  });
   return response.json();
 }
 
@@ -92,8 +87,8 @@ export const createProfile = createAsyncThunk(
 
 export const updateProfile = createAsyncThunk(
   "profiles/updateProfile",
-  async ({ id, data }: { id: number; data: Profile }) => {
-    return await updateNetworkProfile(id, data);
+  async ({ data }: { data: Profile }) => {
+    return await updateNetworkProfile(data);
   },
 );
 

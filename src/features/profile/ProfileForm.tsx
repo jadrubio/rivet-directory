@@ -1,19 +1,28 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {Box, Button, Typography, Grid} from "@mui/material";
-import {blankFormState, Profile, transformObjValNullToEmptyString, validationSchema} from "./profileUtils";
+import { Box, Button, Typography, Grid } from "@mui/material";
+import {
+  blankFormState,
+  Profile,
+  transformObjValNullToEmptyString,
+  validationSchema,
+} from "./profileUtils";
 import store, { RootState } from "../../store";
-import { createProfile, setActiveProfile, updateProfile } from "../../store/profileSlice";
+import {
+  createProfile,
+  setActiveProfile,
+  updateProfile,
+} from "../../store/profileSlice";
 import { FormInput } from "../../UI/FormInput";
 
 type ProfileFormArgs = Omit<Profile, "id">;
 
 const ProfileForm = () => {
   const profile = useSelector((state: RootState) => state.profile.inFocus);
-  const loading = useSelector((state: RootState) => state.profile.loading);
+  const isLoading = useSelector((state: RootState) => state.profile.loading);
   const navigate = useNavigate();
 
   const {
@@ -23,12 +32,14 @@ const ProfileForm = () => {
     formState: { errors },
   } = useForm<ProfileFormArgs>({
     resolver: yupResolver(validationSchema),
-    defaultValues: profile ? transformObjValNullToEmptyString(profile) : blankFormState,
+    defaultValues: profile
+      ? transformObjValNullToEmptyString(profile)
+      : blankFormState,
   });
 
   useEffect(() => {
     if (profile) {
-      reset(profile);
+      reset(transformObjValNullToEmptyString(profile));
     } else {
       reset(blankFormState);
     }
@@ -39,13 +50,17 @@ const ProfileForm = () => {
     store.dispatch(setActiveProfile(null));
   };
 
-  const onSubmit = (data: ProfileFormArgs) => {
-    if (profile && profile?.id) {
-      store.dispatch(
-        updateProfile({ id: profile.id, data: { id: profile.id, ...data } }),
-      );
-    } else {
-      store.dispatch(createProfile(data));
+  const onSubmit = async (data: ProfileFormArgs) => {
+    try {
+      if (profile) {
+        store.dispatch(updateProfile({ data: { id: profile.id, ...data } }));
+      } else {
+        store.dispatch(createProfile(data));
+      }
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+      navigate("/error");
     }
   };
 
@@ -64,8 +79,8 @@ const ProfileForm = () => {
       >
         {profile?.id ? "Update Profile" : "Create Profile"}
       </Typography>
-      {loading && <Typography variant="h6">Loading...</Typography>}
-      {!loading && (
+      {isLoading && <Typography variant="h6">Loading...</Typography>}
+      {!isLoading && (
         <Grid container spacing={2}>
           <FormInput
             name="first_name"
@@ -146,16 +161,18 @@ const ProfileForm = () => {
             </Button>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Button
-              type="button"
-              variant="contained"
-              color="error"
-              fullWidth
-              sx={{ mt: 2 }}
-              onClick={handleClear}
-            >
-              Clear Form
-            </Button>
+            {!profile?.id && (
+              <Button
+                type="button"
+                variant="contained"
+                color="error"
+                fullWidth
+                sx={{ mt: 2 }}
+                onClick={handleClear}
+              >
+                Clear Form
+              </Button>
+            )}
           </Grid>
           <Grid item xs={12} sm={4}>
             <Button
